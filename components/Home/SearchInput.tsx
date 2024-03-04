@@ -3,7 +3,7 @@ import { FaLocationDot } from "react-icons/fa6";
 const SearchInput = () => {
     return (
         <div>
-            <h2 className="text-center text-[20px] text-gray-400 mb-5">
+            <h2 className="text-center text-3xl text-gray-400 mb-5">
                 Lets Search what you need
             </h2>
 

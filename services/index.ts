@@ -16,9 +16,23 @@ export const getCarLists = async() =>{
             url
           }
           carType
+          carBrand
         }
       }
     `
     const result = await request("https://api-ap-south-1.hygraph.com/v2/cltakc3is2h7007uzzslrf4g0/master",query)
     return result;
+}
+
+export const getStoreLocations = async() =>{
+  const query = gql`
+  query MyQuery {
+    storeLocations {
+      address
+    }
+  }
+  
+  `
+  const result = await request("https://api-ap-south-1.hygraph.com/v2/cltakc3is2h7007uzzslrf4g0/master",query)
+  return result;
 }

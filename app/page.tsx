@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import CarFiltersOption from '@/components/Home/CarFiltersOption'
 import CarList from '@/components/Home/CarList'
@@ -8,25 +8,42 @@ import { getCarLists } from '@/services'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
-
     const [carsList, setCarsList] = useState<any>([])
+    const [carsOrgList, setCarsOrgList] = useState<any>([])
 
     useEffect(() => {
         const getCarList_ = async () => {
-            const result:any = await getCarLists()
-        //  console.log(result)
+            const result: any = await getCarLists()
+            //  console.log(result)
             setCarsList(result?.carList)
+            setCarsOrgList(result?.carList)
         }
 
         getCarList_()
     }, [])
 
+    const filterCarList = (brand: string) => {
+        const filterList = carsOrgList.filter(
+            (car: any) => car.carBrand === brand
+        )
+        setCarsList(filterList)
+    }
+
+    const orderCarList = (order: any) => {
+        const sortedList = [...carsOrgList].sort((a, b) => 
+        order==-1? a.price-b.price : b.price-a.price);
+        setCarsList(sortedList)
+    }
+
     return (
-        
         <div className="p-5 sm:px-10 md:px-20">
             <Hero />
             <SearchInput />
-            <CarFiltersOption />
+            <CarFiltersOption
+                carsList={carsOrgList}
+                setBrand={(value: string) => filterCarList(value)}
+                setOrderCarList={(value: any) => orderCarList(value)}
+            />
             <CarList carsList={carsList} />
         </div>
     )
