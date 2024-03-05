@@ -1,24 +1,16 @@
 'use client'
-import { getStoreLocations } from '@/services'
+import { createBooking } from '@/services'
 import React, { useEffect, useState } from 'react'
 
 const Form = ({ car }: any) => {
     const [formValue, setFormValue] = useState({
         location: '',
-        pickupDate: '',
+        pickUpDate: '',
         dropOffDate: '',
-        pickupTime: '',
+        pickUpTime: '',
         dropOffTime: '',
         contactNumber: '',
     })
-    useEffect(() => {
-        getStoreLocation_()
-    }, [])
-
-    const getStoreLocation_ = async () => {
-        const resp = await getStoreLocations()
-        console.log(resp)
-    }
 
     const handleChange = (e: any) => {
         setFormValue({
@@ -27,26 +19,31 @@ const Form = ({ car }: any) => {
         })
     }
 
-    const handleSubmit = (e: any) => {
-        e.preventDefault()
+    const handleSubmit = async () => {
         console.log(formValue)
+        const resp = await createBooking(formValue)
+        console.log(resp)
+        
+      setFormValue({
+        location: '',
+        pickUpDate: '',
+        dropOffDate: '',
+        pickUpTime: '',
+        dropOffTime: '',
+        contactNumber: '',
+      })
     }
 
     return (
         <div>
             <div className="mb-5 mt-5 flex w-full flex-col">
                 <label className="text-gray-400">PickUp Location</label>
-                <select
-                    className="select select-bordered w-full max-w-lg"
+                <textarea
+                    className="textarea textarea-bordered resize-none"
+                    placeholder="Address"
                     name="location"
                     onChange={handleChange}
-                >
-                    <option disabled selected>
-                        PickUp Location
-                    </option>
-                    <option>Han Solo</option>
-                    <option>Gr</option>
-                </select>
+                />
             </div>
 
             <div className="flex-col-2 mb-5 flex gap-5">
@@ -56,7 +53,7 @@ const Form = ({ car }: any) => {
                         type="date"
                         placeholder="Type Here"
                         className="input input-bordered w-full max-w-lg"
-                        name="pickupDate"
+                        name="pickUpDate"
                         onChange={handleChange}
                     />
                 </div>
@@ -79,7 +76,7 @@ const Form = ({ car }: any) => {
                         type="time"
                         placeholder="Type Here"
                         className="input input-bordered w-full max-w-lg"
-                        name="pickupTime"
+                        name="pickUpTime"
                         onChange={handleChange}
                     />
                 </div>
