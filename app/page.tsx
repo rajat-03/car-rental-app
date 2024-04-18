@@ -6,6 +6,8 @@ import Hero from '@/components/Home/Hero'
 import SearchInput from '@/components/Home/SearchInput'
 import { getCarLists } from '@/services'
 import { useEffect, useState } from 'react'
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
     const [carsList, setCarsList] = useState<any>([])
@@ -45,6 +47,10 @@ export default function Home() {
                 setOrderCarList={(value: any) => orderCarList(value)}
             />
             <CarList carsList={carsList} />
+            <ToastContainer 
+            autoClose={2000}
+            position= "bottom-right"
+            />
         </div>
     )
 }

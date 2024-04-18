@@ -33,12 +33,14 @@ export const createBooking = async (formValue: any) => {
     mutation MyMutation {
       createBookingDetails(
         data: {
+          userName:"${formValue.userName}",
+          carId: {connect: {id: "${formValue.carId.connect.id}"}}
           contactNumber: "${formValue.contactNumber}",
           dropOffDate: "${formValue.dropOffDate}",
           dropOffTime: "${formValue.dropOffTime}",
           location: "${formValue.location}",
           pickUpDate: "${formValue.pickUpDate}",
-          pickUpTime: "${formValue.pickUpTime}"
+          pickUpTime: "${formValue.pickUpTime}",
         }
       ) {
         id

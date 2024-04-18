@@ -30,8 +30,9 @@ const CarFiltersOption = ({ carsList,setBrand,setOrderCarList }: any) => {
             <div className="flex gap-5">
                 <select className="select select-bordered w-full max-w-xs"
                 onChange={(e)=>setOrderCarList(e.target.value)}
+                defaultValue={"Price"}
                 >
-                    <option disabled selected>
+                    <option disabled >
                         Price
                     </option>
                     <option value={-1}>Min to Max</option>
@@ -40,8 +41,9 @@ const CarFiltersOption = ({ carsList,setBrand,setOrderCarList }: any) => {
 
                 <select className="select select-bordered hidden w-full max-w-xs md:block"
                 onChange={(e)=>setBrand(e.target.value)}
+                defaultValue={"Manufacturar"}
                 >
-                    <option disabled selected>
+                    <option disabled >
                         Manufacturar
                     </option>
                     {carBrands?.map((brand: string, index: number) => (

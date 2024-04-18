@@ -1,8 +1,13 @@
 'use client'
 import { createBooking } from '@/services'
+import { useUser } from '@clerk/nextjs';
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 
 const Form = ({ car }: any) => {
+// get username from clerk
+const { user } = useUser()
+
     const [formValue, setFormValue] = useState({
         location: '',
         pickUpDate: '',
@@ -10,7 +15,19 @@ const Form = ({ car }: any) => {
         pickUpTime: '',
         dropOffTime: '',
         contactNumber: '',
+        userName:user?.fullName,
+        carId: {connect: {id: ""}}
     })
+
+    useEffect(() => {
+        if(car){
+            setFormValue({
+                ...formValue,
+                carId: {connect: {id: car.id}}
+            })
+        }
+    }, [car])
+    
 
     const handleChange = (e: any) => {
         setFormValue({
@@ -23,6 +40,7 @@ const Form = ({ car }: any) => {
         console.log(formValue)
         const resp = await createBooking(formValue)
         console.log(resp)
+        toast.success("Booking Confirmed");
         
       setFormValue({
         location: '',
@@ -31,6 +49,9 @@ const Form = ({ car }: any) => {
         pickUpTime: '',
         dropOffTime: '',
         contactNumber: '',
+        userName:'',
+        carId: {connect: {id: ""}}
+        
       })
     }
 
