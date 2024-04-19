@@ -1,13 +1,15 @@
 'use client'
 import { createBooking } from '@/services'
-import { useUser } from '@clerk/nextjs';
+import { useUser } from '@clerk/nextjs'
+
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 
 const Form = ({ car }: any) => {
-// get username from clerk
-const { user } = useUser()
+    // get username from clerk
+    const { user } = useUser()
 
+    const [loading, setLoading] = useState(true)
     const [formValue, setFormValue] = useState({
         location: '',
         pickUpDate: '',
@@ -15,19 +17,20 @@ const { user } = useUser()
         pickUpTime: '',
         dropOffTime: '',
         contactNumber: '',
-        userName:user?.fullName,
-        carId: {connect: {id: ""}}
+        userName: user?.fullName,
+        carId: { connect: { id: '' } },
     })
 
     useEffect(() => {
-        if(car){
+        if (car && user) {
             setFormValue({
                 ...formValue,
-                carId: {connect: {id: car.id}}
+                carId: { connect: { id: car.id } },
+                userName: user?.fullName || 'Error: User not found',
             })
         }
-    }, [car])
-    
+        setLoading(false)
+    }, [car, user])
 
     const handleChange = (e: any) => {
         setFormValue({
@@ -40,19 +43,22 @@ const { user } = useUser()
         console.log(formValue)
         const resp = await createBooking(formValue)
         console.log(resp)
-        toast.success("Booking Confirmed");
-        
-      setFormValue({
-        location: '',
-        pickUpDate: '',
-        dropOffDate: '',
-        pickUpTime: '',
-        dropOffTime: '',
-        contactNumber: '',
-        userName:'',
-        carId: {connect: {id: ""}}
-        
-      })
+
+        setFormValue({
+            location: '',
+            pickUpDate: '',
+            dropOffDate: '',
+            pickUpTime: '',
+            dropOffTime: '',
+            contactNumber: '',
+            userName: '',
+            carId: { connect: { id: '' } },
+        })
+        toast.success('Booking Confirmed')
+    }
+
+    if (loading) {
+        return <div>Loading...</div>
     }
 
     return (

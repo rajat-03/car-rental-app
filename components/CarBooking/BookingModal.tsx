@@ -1,6 +1,7 @@
 import React from 'react'
 import CarCard from '../Home/CarCard'
 import Form from './Form'
+import Images from './Images'
 
 const BookingModel = ({ selectedCar }: any) => {
     return (
@@ -12,7 +13,7 @@ const BookingModel = ({ selectedCar }: any) => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2">
                 <div>
-                    <CarCard car={selectedCar} />
+                   <Images car={selectedCar}/>
                 </div>
                 <div>
                     <Form car={selectedCar}/>
