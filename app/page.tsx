@@ -12,13 +12,16 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Home() {
     const [carsList, setCarsList] = useState<any>([])
     const [carsOrgList, setCarsOrgList] = useState<any>([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const getCarList_ = async () => {
+            setLoading(true);
             const result: any = await getCarLists()
             //  console.log(result)
             setCarsList(result?.carList)
             setCarsOrgList(result?.carList)
+            setLoading(false);
         }
 
         getCarList_()
@@ -37,6 +40,10 @@ export default function Home() {
         setCarsList(sortedList)
     }
 
+    if(loading)
+    {
+        return <h1>Loading...</h1>
+    }
     return (
         <div className="p-5 sm:px-10 md:px-20">
             <Hero />
