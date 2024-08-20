@@ -17,15 +17,15 @@ const Navbar = () => {
                 </Link>
 
                 <div className="hidden gap-5 md:flex">
-                    <h1 className="cursor-pointer rounded-full p-2 px-4 text-lg hover:bg-blue-500 hover:text-white">
+                    <Link href="/" className="cursor-pointer rounded-full p-2 px-4 text-lg hover:bg-blue-500 hover:text-white">
                         Home
-                    </h1>
-                    <h1 className="cursor-pointer rounded-full p-2 px-4 text-lg hover:bg-blue-500 hover:text-white">
+                    </Link>
+                    <Link href="/booking" className="cursor-pointer rounded-full p-2 px-4 text-lg hover:bg-blue-500 hover:text-white">
                         History
-                    </h1>
-                    <h1 className="cursor-pointer rounded-full p-2 px-4 text-lg hover:bg-blue-500 hover:text-white">
+                    </Link>
+                    <Link href="/" className="cursor-pointer rounded-full p-2 px-4 text-lg hover:bg-blue-500 hover:text-white">
                         Contact Us
-                    </h1>
+                    </Link>
                 </div>
                 
                 <UserButton />

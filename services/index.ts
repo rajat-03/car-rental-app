@@ -57,3 +57,30 @@ export const createBooking = async (formValue: any) => {
   );
   return result;
 };
+
+export const getBookingDetails = async (userName: any) => {
+  const query = gql`
+  query MyQuery {
+    bookingDetail(where: {userName: "${userName}"}) {
+      carId {
+        id
+        name
+      }
+      pickUpDate
+      location
+      pickUpTime
+      userName
+      dropOffDate
+      dropOffTime
+      contactNumber
+    }
+  }
+  `
+  const result = await request(
+      'https://api-ap-south-1.hygraph.com/v2/cltakc3is2h7007uzzslrf4g0/master',
+      query
+  )
+  return result
+}
+
+

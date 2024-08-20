@@ -7,6 +7,7 @@ import CarCard from './CarCard'
 const CarList = (props: any) => {
     const [selectedCar, setSelectedCar] = useState<any>([])
 
+
     return (
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {props.carsList?.map((car: any, index: number) => (

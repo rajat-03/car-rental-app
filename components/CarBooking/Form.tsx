@@ -1,6 +1,8 @@
 'use client'
+
 import { createBooking } from '@/services'
 import { useUser } from '@clerk/nextjs'
+import axios from 'axios'
 
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -17,7 +19,8 @@ const Form = ({ car }: any) => {
         pickUpTime: '',
         dropOffTime: '',
         contactNumber: '',
-        userName: user?.fullName,
+        userName: '',
+        userEmail: '',
         carId: { connect: { id: '' } },
     })
 
@@ -27,6 +30,7 @@ const Form = ({ car }: any) => {
                 ...formValue,
                 carId: { connect: { id: car.id } },
                 userName: user?.fullName || 'Error: User not found',
+                userEmail: user?.emailAddresses[0].emailAddress || 'Error: User not found' 
             })
         }
         setLoading(false)
@@ -40,21 +44,30 @@ const Form = ({ car }: any) => {
     }
 
     const handleSubmit = async () => {
-        console.log(formValue)
-        const resp = await createBooking(formValue)
-        console.log(resp)
+        try {
+            const response = await axios.post("http://localhost:3000/api/mail",formValue)
+            console.log("Respones data ", response.data);
 
-        setFormValue({
-            location: '',
-            pickUpDate: '',
-            dropOffDate: '',
-            pickUpTime: '',
-            dropOffTime: '',
-            contactNumber: '',
-            userName: '',
-            carId: { connect: { id: '' } },
-        })
-        toast.success('Booking Confirmed')
+            console.log("formData: ",formValue)
+            const resp = await createBooking(formValue)
+            
+            setFormValue({
+                location: '',
+                pickUpDate: '',
+                dropOffDate: '',
+                pickUpTime: '',
+                dropOffTime: '',
+                contactNumber: '',
+                userName: '',
+                userEmail: '',
+                carId: { connect: { id: '' } },
+            })
+            toast.success('Booking Confirmed')
+
+        } catch (error) {
+            console.log("Error in mail sending in frontend", error);
+        }
+       
     }
 
     if (loading) {
@@ -130,7 +143,9 @@ const Form = ({ car }: any) => {
                 />
             </div>
             <div className="modal-action">
-                <button className="btn">Close</button>
+                <button className="btn">
+                    Close
+                </button>
                 <button
                     className="btn bg-blue-500 text-white hover:bg-blue-700"
                     onClick={handleSubmit}
